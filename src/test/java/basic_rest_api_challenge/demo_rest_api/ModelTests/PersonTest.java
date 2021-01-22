@@ -74,8 +74,14 @@ public class PersonTest {
     @Test
     public void testPersonDateUpdated(){
         LocalDate actual = person.getDateUpdated();
-        LocalDate expected = LocalDate.now();
-        assertEquals(expected, actual);
+        List<LocalDate> datesUpdated = new ArrayList<>();
+        datesUpdated.add(LocalDate.parse("2021-03-11"));
+        datesUpdated.add(LocalDate.parse("2021-02-24"));
+        datesUpdated.add(LocalDate.now().plusDays(10));
+        datesUpdated.add(LocalDate.parse("2021-11-11"));
+        for (LocalDate expected : datesUpdated){
+            assertNotEquals(expected, actual);
+        }
     }
 
 

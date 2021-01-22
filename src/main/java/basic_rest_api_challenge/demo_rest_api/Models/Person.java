@@ -9,6 +9,7 @@ import java.util.Date;
 
 
 @Entity
+@Table(name="persons")
 public class Person {
 
     @Id
@@ -29,18 +30,24 @@ public class Person {
     @DateTimeFormat(pattern = "MM-dd-yyyy")
     private LocalDate dateUpdated;
 
-    public Person(long id, String name, Short age, LocalDate dateJoined, LocalDate dateUpdated) {
+    @ManyToOne
+    @JoinColumn (name = "job_id")
+    private Job job;
+
+    public Person(long id, String name, Short age, LocalDate dateJoined, LocalDate dateUpdated, Job job) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.dateJoined = dateJoined;
         this.dateUpdated = dateUpdated;
+        this.job = job;
     }
-    public Person(String name, Short age, LocalDate dateJoined, LocalDate dateUpdated) {
+    public Person(String name, Short age, LocalDate dateJoined, LocalDate dateUpdated, Job job) {
         this.name = name;
         this.age = age;
         this.dateJoined = dateJoined;
         this.dateUpdated = dateUpdated;
+        this.job = job;
     }
 
     public Person(){}
@@ -83,5 +90,13 @@ public class Person {
 
     public void setDateUpdated(LocalDate dateUpdated) {
         this.dateUpdated = dateUpdated;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
     }
 }
