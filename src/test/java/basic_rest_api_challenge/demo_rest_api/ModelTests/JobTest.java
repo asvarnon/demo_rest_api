@@ -102,6 +102,14 @@ public class JobTest {
 
         assertNotEquals(expected, actual);
         System.out.println("Current list does not equal empty list");
+
+        expected.add(person2);
+        expected.add(person1);
+        System.out.println("actual = " + actual);
+        System.out.println("expected = " + expected);
+
+        assertNotEquals(expected, actual);
+        System.out.println("not equal if different order");
     }
 
 
