@@ -2,6 +2,7 @@ package basic_rest_api_challenge.demo_rest_api.Controllers;
 
 import basic_rest_api_challenge.demo_rest_api.Exception.ResourceNotFoundException;
 import basic_rest_api_challenge.demo_rest_api.Models.Person;
+import basic_rest_api_challenge.demo_rest_api.Services.ExceptionService;
 import basic_rest_api_challenge.demo_rest_api.repos.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,9 @@ public class PersonController {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private ExceptionService exceptionService;
+
     // create get all persons api
     @GetMapping("/persons")
     public List<Person> getAllPersons(){
@@ -29,13 +33,10 @@ public class PersonController {
     }
 
     //get person by id
-    @GetMapping("person/{id}")
+    @GetMapping("/person/{id}")
     public ResponseEntity<Person> getPersonById(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
         Person person = personRepository.findAllById(id);
-        if (person == null){
-            throw new ResourceNotFoundException("person not found");
-        }
-        personRepository.findAllById(id);
+        exceptionService.checkPersonIsNull(person);
         return ResponseEntity.ok().body(person);
     }
 
@@ -43,9 +44,8 @@ public class PersonController {
     @PutMapping("/person/{id}")
     public ResponseEntity<Person> updatePerson(@PathVariable(value = "id") long id, @RequestBody Person personDetails) throws ResourceNotFoundException{
         Person person = personRepository.findAllById(id);
-        if (person == null){
-            throw new ResourceNotFoundException("person not found");
-        }
+        exceptionService.checkPersonIsNull(person);
+
         person.setName(personDetails.getName());
         person.setAge(personDetails.getAge());
         person.setJob(personDetails.getJob());
@@ -59,9 +59,7 @@ public class PersonController {
     @DeleteMapping("/person/{id}")
     public ResponseEntity<Person> deletePerson(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
         Person person = personRepository.findAllById(id);
-        if (person == null){
-            throw new ResourceNotFoundException("person not found");
-        }
+        exceptionService.checkPersonIsNull(person);
         personRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
