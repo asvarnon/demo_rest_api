@@ -52,7 +52,7 @@ public class JobTest {
     }
 
     @Test
-    public void testJobSalaries(){
+    public void testJobSalariesNotEquals(){
         double actual = this.job.getSalary();
         ArrayList<Double> salaries = new ArrayList<>();
         salaries.add((double) 260);

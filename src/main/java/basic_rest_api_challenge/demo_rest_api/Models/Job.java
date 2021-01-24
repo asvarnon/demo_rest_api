@@ -1,5 +1,7 @@
 package basic_rest_api_challenge.demo_rest_api.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class Job {
     private double salary;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
+    @JsonBackReference
     private List<Person> jobHolders;
 
     public Job(){}

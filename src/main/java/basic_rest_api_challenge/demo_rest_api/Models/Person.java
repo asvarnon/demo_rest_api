@@ -1,6 +1,7 @@
 package basic_rest_api_challenge.demo_rest_api.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class Person {
 
     @ManyToOne
     @JoinColumn (name = "job_id")
+    @JsonManagedReference
     private Job job;
 
     public Person(long id, String name, Short age, LocalDate dateJoined, LocalDate dateUpdated, Job job) {
