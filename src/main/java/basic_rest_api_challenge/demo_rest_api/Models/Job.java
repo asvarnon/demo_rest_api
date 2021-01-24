@@ -21,7 +21,6 @@ public class Job {
     private double salary;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
-    @JsonBackReference
     private List<Person> jobHolders;
 
     public Job(){}
@@ -76,6 +75,7 @@ public class Job {
         this.salary = salary;
     }
 
+    @JsonBackReference
     public List<Person> getJobHolderList() {
         return jobHolders;
     }

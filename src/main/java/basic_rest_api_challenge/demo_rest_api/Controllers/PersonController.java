@@ -4,8 +4,7 @@ import basic_rest_api_challenge.demo_rest_api.Exception.ResourceNotFoundExceptio
 import basic_rest_api_challenge.demo_rest_api.Models.Person;
 import basic_rest_api_challenge.demo_rest_api.repos.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,22 +30,40 @@ public class PersonController {
 
     //get person by id
     @GetMapping("person/{id}")
-    public @ResponseBody Person getPersonById(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
-        if (personRepository.findAllById(id) == null){
+    public ResponseEntity<Person> getPersonById(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
+        Person person = personRepository.findAllById(id);
+        if (person == null){
             throw new ResourceNotFoundException("person not found");
         }
-        return personRepository.findAllById(id);
+        personRepository.findAllById(id);
+        return ResponseEntity.ok().body(person);
     }
 
     //update person
     @PutMapping("/person/{id}")
-    public @ResponseBody Person updatePerson(@PathVariable(value = "id") long id, @RequestBody Person personDetails) throws ResourceNotFoundException{
-        if (personRepository.findAllById(id) == null){
+    public ResponseEntity<Person> updatePerson(@PathVariable(value = "id") long id, @RequestBody Person personDetails) throws ResourceNotFoundException{
+        Person person = personRepository.findAllById(id);
+        if (person == null){
             throw new ResourceNotFoundException("person not found");
         }
-
+        person.setName(personDetails.getName());
+        person.setAge(personDetails.getAge());
+        person.setJob(personDetails.getJob());
+        person.setDateJoined(personDetails.getDateJoined());
+        person.setDateUpdated(personDetails.getDateUpdated());
+        personRepository.save(person);
+        return ResponseEntity.ok().body(person);
     }
 
     //delete person by id
+    @DeleteMapping("/person/{id}")
+    public ResponseEntity<Person> deletePerson(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
+        Person person = personRepository.findAllById(id);
+        if (person == null){
+            throw new ResourceNotFoundException("person not found");
+        }
+        personRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 
 }

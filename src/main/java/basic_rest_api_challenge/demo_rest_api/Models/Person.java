@@ -33,7 +33,6 @@ public class Person {
 
     @ManyToOne
     @JoinColumn (name = "job_id")
-    @JsonManagedReference
     private Job job;
 
     public Person(long id, String name, Short age, LocalDate dateJoined, LocalDate dateUpdated, Job job) {
@@ -94,6 +93,7 @@ public class Person {
         this.dateUpdated = dateUpdated;
     }
 
+    @JsonManagedReference
     public Job getJob() {
         return job;
     }
