@@ -19,6 +19,7 @@ public class PersonService {
 
     public List<Person> getPersons(){
         List<Person> persons = personRepository.findAll();
+        System.out.println("getting data from db: " + persons);
         return persons;
     }
 
