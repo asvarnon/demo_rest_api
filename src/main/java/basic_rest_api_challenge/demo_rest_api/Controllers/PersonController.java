@@ -3,11 +3,14 @@ package basic_rest_api_challenge.demo_rest_api.Controllers;
 import basic_rest_api_challenge.demo_rest_api.Exception.ResourceNotFoundException;
 import basic_rest_api_challenge.demo_rest_api.Models.Person;
 import basic_rest_api_challenge.demo_rest_api.Services.ExceptionService;
+import basic_rest_api_challenge.demo_rest_api.Services.PersonService;
 import basic_rest_api_challenge.demo_rest_api.repos.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
 import java.util.List;
 
 @RestController
@@ -20,22 +23,25 @@ public class PersonController {
     @Autowired
     private ExceptionService exceptionService;
 
+    @Autowired
+    private PersonService personService;
+
     // create get all persons api
-    @GetMapping("/persons")
+    @GetMapping(value = "/persons")
     public List<Person> getAllPersons(){
-       return personRepository.findAll();
+       return personService.getPersons();
     }
 
     //create person
     @PostMapping("/person")
     public Person createPerson(@RequestBody Person person){
-        return personRepository.save(person);
+        return personService.addPerson(person);
     }
 
     //get person by id
     @GetMapping("/person/{id}")
     public ResponseEntity<Person> getPersonById(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
-        Person person = personRepository.findAllById(id);
+        Person person = personService.getPerson(id);
         exceptionService.checkPersonIsNull(person);
         return ResponseEntity.ok().body(person);
     }
@@ -60,7 +66,7 @@ public class PersonController {
     public ResponseEntity<Person> deletePerson(@PathVariable(value = "id") long id) throws ResourceNotFoundException {
         Person person = personRepository.findAllById(id);
         exceptionService.checkPersonIsNull(person);
-        personRepository.deleteById(id);
+        personService.deletePerson(person);
         return ResponseEntity.ok().build();
     }
 
