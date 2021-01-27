@@ -3,10 +3,7 @@ import basic_rest_api_challenge.demo_rest_api.Models.Person;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import java.time.*;
 import java.util.List;
@@ -15,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class PersonTest {
 
-    private Person person = new Person();
+    private Person person = new Person("Phil", (short) 65, LocalDate.parse("2011-01-01"), LocalDate.now(), jobRepository.findByJobTitleEquals("CEO"));
 
     @Before
     public void setUp(){
@@ -28,7 +25,7 @@ public class PersonTest {
 
     @Test
     public void testIfPersonIsNull(){
-        Person person = new Person();
+        Person person = new Person("Phil", (short) 65, LocalDate.parse("2011-01-01"), LocalDate.now(), jobRepository.findByJobTitleEquals("CEO"));
         assertNotNull(person);
     }
 

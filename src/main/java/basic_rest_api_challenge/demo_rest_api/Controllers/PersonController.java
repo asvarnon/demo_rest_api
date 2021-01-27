@@ -4,6 +4,7 @@ import basic_rest_api_challenge.demo_rest_api.Exception.ResourceNotFoundExceptio
 import basic_rest_api_challenge.demo_rest_api.Models.Person;
 import basic_rest_api_challenge.demo_rest_api.Services.ExceptionService;
 import basic_rest_api_challenge.demo_rest_api.Services.PersonService;
+import basic_rest_api_challenge.demo_rest_api.Services.SeedListService;
 import basic_rest_api_challenge.demo_rest_api.repos.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -25,6 +26,16 @@ public class PersonController {
 
     @Autowired
     private PersonService personService;
+
+    @Autowired
+    private SeedListService seedListService;
+
+    //start
+    @GetMapping("")
+    public void start(){
+        seedListService.jobSeedList();
+        seedListService.personSeedList();
+    }
 
     // create get all persons api
     @GetMapping(value = "/persons")
