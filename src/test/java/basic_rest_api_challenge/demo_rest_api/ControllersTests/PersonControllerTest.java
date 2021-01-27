@@ -1,35 +1,28 @@
 package basic_rest_api_challenge.demo_rest_api.ControllersTests;
 
 
-import basic_rest_api_challenge.demo_rest_api.Controllers.PersonController;
 import basic_rest_api_challenge.demo_rest_api.Models.Job;
 import basic_rest_api_challenge.demo_rest_api.Models.Person;
 import basic_rest_api_challenge.demo_rest_api.Services.PersonService;
 import basic_rest_api_challenge.demo_rest_api.repos.PersonRepository;
-import org.hamcrest.Matchers;
-import org.junit.Before;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import org.joda.time.LocalDate;
-import java.util.List;
+
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -82,7 +75,8 @@ public class PersonControllerTest {
         ).collect(Collectors.toList()));
         assertEquals(1, personService.getPersonsByName(name).size());
         assertEquals("Joe", personService.getPersonsByName(name).get(0).getName());
-        assertEquals(30, personService.getPersonsByName(name).get(0).getAge());
+        assertEquals(30, (long) personService.getPersonsByName(name).get(0).getAge());
+        assertEquals(30, (long) personService.getPersonsByName(name).get(0).getAge());
     }
 
     @Test
