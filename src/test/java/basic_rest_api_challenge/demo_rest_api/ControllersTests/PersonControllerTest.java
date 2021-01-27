@@ -7,7 +7,6 @@ import basic_rest_api_challenge.demo_rest_api.Models.Person;
 import basic_rest_api_challenge.demo_rest_api.Services.PersonService;
 import basic_rest_api_challenge.demo_rest_api.repos.PersonRepository;
 import org.hamcrest.Matchers;
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,12 +21,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import org.joda.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,7 +52,7 @@ public class PersonControllerTest {
     private PersonRepository personRepository;
 
     @Test
-    public void getPersonsTest(){
+    public void getPersonsTestEquals(){
         when(personRepository.findAll()).thenReturn(Stream.of(
                 new Person("Joe", (short) 30, LocalDate.parse("2015-04-23"), LocalDate.now(), job1),
                 new Person("Bob", (short) 25, LocalDate.parse("2018-10-03"), LocalDate.now(), job1),
@@ -63,12 +62,41 @@ public class PersonControllerTest {
     }
 
     @Test
-    public void getPersonByNameTest(){
+    public void getPersonsTestNotEquals(){
+        when(personRepository.findAll()).thenReturn(Stream.of(
+                new Person("Joe", (short) 30, LocalDate.parse("2015-04-23"), LocalDate.now(), job1),
+                new Person("Bob", (short) 25, LocalDate.parse("2018-10-03"), LocalDate.now(), job1),
+                new Person("Moe", (short) 33, LocalDate.parse("2013-08-15"), LocalDate.now(), job2)
+        ).collect(Collectors.toList()));
+        assertNotEquals(-2, personService.getPersons().size());
+        assertNotEquals(10.1, personService.getPersons().size());
+        assertNotEquals(2, personService.getPersons().size());
+    }
+
+
+    @Test
+    public void getPersonsByNameTestEquals(){
         String name = "Joe";
         when(personRepository.findByName(name)).thenReturn(Stream.of(
                 new Person("Joe", (short) 30, LocalDate.parse("2015-04-23"), LocalDate.now(), job1)
         ).collect(Collectors.toList()));
         assertEquals(1, personService.getPersonsByName(name).size());
+        assertEquals("Joe", personService.getPersonsByName(name).get(0).getName());
+        assertEquals(30, personService.getPersonsByName(name).get(0).getAge());
+    }
+
+    @Test
+    public void getPersonsByNameTestNotEquals(){
+        String name = "Joe";
+        when(personRepository.findByName(name)).thenReturn(Stream.of(
+                new Person("Joe", (short) 30, LocalDate.parse("2015-04-23"), LocalDate.now(), job1)
+        ).collect(Collectors.toList()));
+
+        assertNotEquals("joe", personService.getPersonsByName(name).get(0).getName());
+        assertNotEquals("JOE", personService.getPersonsByName(name).get(0).getName());
+        assertNotEquals(2, personService.getPersonsByName(name).size());
+        assertNotEquals(-4, personService.getPersonsByName(name).size());
+        assertNotEquals(2.0001, personService.getPersonsByName(name).size());
     }
 
     @Test
