@@ -66,7 +66,6 @@ public class PersonControllerTest {
         assertNotEquals(2, personService.getPersons().size());
     }
 
-
     @Test
     public void getPersonsByNameTestEquals(){
         String name = "Joe";
@@ -76,7 +75,8 @@ public class PersonControllerTest {
         assertEquals(1, personService.getPersonsByName(name).size());
         assertEquals("Joe", personService.getPersonsByName(name).get(0).getName());
         assertEquals(30, (long) personService.getPersonsByName(name).get(0).getAge());
-        assertEquals(30, (long) personService.getPersonsByName(name).get(0).getAge());
+        assertEquals("Sales Rep", personService.getPersonsByName(name).get(0).getJob().getJobTitle());
+        assertEquals("2015-04-23", personService.getPersonsByName(name).get(0).getDateJoined().toString());
     }
 
     @Test
@@ -85,12 +85,16 @@ public class PersonControllerTest {
         when(personRepository.findByName(name)).thenReturn(Stream.of(
                 new Person("Joe", (short) 30, LocalDate.parse("2015-04-23"), LocalDate.now(), job1)
         ).collect(Collectors.toList()));
-
         assertNotEquals("joe", personService.getPersonsByName(name).get(0).getName());
         assertNotEquals("JOE", personService.getPersonsByName(name).get(0).getName());
         assertNotEquals(2, personService.getPersonsByName(name).size());
         assertNotEquals(-4, personService.getPersonsByName(name).size());
         assertNotEquals(2.0001, personService.getPersonsByName(name).size());
+
+        assertNotEquals(40, (long) personService.getPersonsByName(name).get(0).getAge());
+        assertNotEquals("HR Rep", personService.getPersonsByName(name).get(0).getJob().getJobTitle());
+        assertNotEquals("2014-04-23", personService.getPersonsByName(name).get(0).getDateJoined().toString());
+
     }
 
     @Test
