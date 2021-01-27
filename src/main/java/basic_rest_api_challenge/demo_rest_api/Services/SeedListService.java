@@ -30,7 +30,7 @@ public class SeedListService {
 
     public List<Person> personSeedList(){
         if (personDao.findAll().size() == 0){
-            Person firstPerson = new Person("Phil", (short) 65, LocalDate.parse("2011-01-01"),LocalDate.now(), jobRepository.findByJobTitleEquals("CEO"));
+            Person firstPerson = new Person("Phil", (short) 65, LocalDate.parse("2015-01-01"), LocalDate.now(), jobRepository.findByJobTitleEquals("CEO"));
             Person secondPerson = new Person("Bob", (short) 35, LocalDate.parse("2020-01-01"),LocalDate.now() , jobRepository.findByJobTitleEquals("Salesperson"));
             Person thirdPerson = new Person("Jack", (short) 25, LocalDate.parse("2021-01-01"),LocalDate.now() , jobRepository.findByJobTitleEquals("Salesperson"));
             personDao.save(firstPerson);

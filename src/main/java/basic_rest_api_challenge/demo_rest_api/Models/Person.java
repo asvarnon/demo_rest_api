@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import org.joda.time.LocalDate;
+import java.util.Date;
 
 
 @Entity
@@ -50,7 +51,7 @@ public class Person {
         this.job = job;
     }
 
-    public Person(String phil, short age, org.joda.time.LocalDate parse, org.joda.time.LocalDate now, Job ceo){}
+    public Person(){}
 
     public long getId() {
         return id;
