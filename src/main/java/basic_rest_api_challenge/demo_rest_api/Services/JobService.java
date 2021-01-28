@@ -2,6 +2,7 @@ package basic_rest_api_challenge.demo_rest_api.Services;
 
 import basic_rest_api_challenge.demo_rest_api.Models.Job;
 import basic_rest_api_challenge.demo_rest_api.repos.JobRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @Service
 public class JobService {
 
+    @Autowired
     private JobRepository jobRepository;
 
     public Job addJob(Job job){
@@ -27,7 +29,6 @@ public class JobService {
 
     public List<Job> getJobsByTitle(String title){
         return jobRepository.findByJobTitle(title);
-
     }
 
     public void deleteJob(Job job){
