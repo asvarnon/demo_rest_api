@@ -7,14 +7,19 @@ import basic_rest_api_challenge.demo_rest_api.Services.JobService;
 import basic_rest_api_challenge.demo_rest_api.Services.SeedListService;
 import basic_rest_api_challenge.demo_rest_api.repos.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Controller
-public class JobController {
+public class JobController implements Specification<Job> {
 
     @Autowired
     private SeedListService seedListService;
@@ -77,5 +82,18 @@ public class JobController {
     }
 
 
+    @Override
+    public Specification<Job> and(Specification<Job> other) {
+        return null;
+    }
 
+    @Override
+    public Specification<Job> or(Specification<Job> other) {
+        return null;
+    }
+
+    @Override
+    public Predicate toPredicate(Root<Job> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+        return null;
+    }
 }

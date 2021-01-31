@@ -49,6 +49,16 @@ public class JobControllerTest {
         assertNotEquals(2.0001, jobService.getJobs().size());
     }
 
+    @Test
+    public void getJobByTitleTestEquals(){
+        String searchQuery = "Rep";
+        when(jobRepository.findByJobTitleLike(searchQuery)).thenReturn(Stream.of(
+                new Job("Sales Rep", 55000),
+                new Job("HR Rep", 65000)
+        ).collect(Collectors.toList()));
+        assertEquals(2, jobService.getJobsByTitle(searchQuery).size());
+    }
+
 
 
 }
