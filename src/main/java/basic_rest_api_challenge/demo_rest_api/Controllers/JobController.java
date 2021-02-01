@@ -19,7 +19,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Controller
-public class JobController implements Specification<Job> {
+public class JobController{
 
     @Autowired
     private SeedListService seedListService;
@@ -81,19 +81,4 @@ public class JobController implements Specification<Job> {
         return ResponseEntity.ok().build();
     }
 
-
-    @Override
-    public Specification<Job> and(Specification<Job> other) {
-        return null;
-    }
-
-    @Override
-    public Specification<Job> or(Specification<Job> other) {
-        return null;
-    }
-
-    @Override
-    public Predicate toPredicate(Root<Job> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        return null;
-    }
 }
